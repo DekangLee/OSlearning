@@ -163,3 +163,108 @@ then
 ```
 
 注意条件中的中括号与条件表达式之间有空格
+另一个流程控制的语句case使用如下。
+
+```shell
+#基本语法
+case $变量名 in
+"值1")
+如果变量值等于值1则执行程序1。
+;;
+"值2")
+如果变量值等于值1则执行程序2。
+;;
+"值3")
+如果变量值等于值1则执行程序3。
+;;
+"值4")
+如果变量值等于值1则执行程序4。
+;;
+*)
+如果以上变量值均不匹配，执行此程序。
+;;
+esac
+```
+
+循环控制语句`for`基本语法1
+
+```shell
+for 变量 in 值1 值2 值3 ...
+do
+代码
+done
+```
+
+以下是示例代码，将命令行输入的参数分别打印出来。
+
+```shell
+for i in "$*"
+do
+    echo "num is $i"
+done
+```
+
+输出结果为`num is 100 200 300`，可见`$*`将所有命令行参数当成一个整体，包括空格。
+循环控制语句`for`基本语法2
+
+```shell
+for ((初始值;循环控制条件;变量变化))
+do
+代码
+done
+```
+
+测试案例，输出从1加到100的值
+
+```shell
+#!/bin/bash
+SUM=0
+for ((i=1;i<=100;i++))
+do
+        SUM=$[$SUM+$i]
+done
+echo "sum = $SUM"
+```
+
+这里需要注意`SUM`赋值的时候不能使用`$SUM`，增加`$`表示对之前定义变量进行取值。
+循环控制语句`while`介绍如下
+
+```shell
+while [ condtion ]
+do
+程序
+done
+```
+
+注意`[]`里的条件判断式与中括号之间有空格
+
+##### read读取控制台输入
+
+基本语法：`read(选项)(参数)`
+选项：`-p`指定读取值时的提示符；`-t`指定读取值时的时间(秒)，如果未在等待时间内输入就不再等待了。
+参数：变量：指定读取时的变量名。
+
+##### shell函数
+
+函数介绍：与其他编程语言一样，shell也可以定义并使用函数。shell中的函数分为系统函数与用户自定义函数。
+系统函数介绍：basename与dirname
+basename:可以获得指定文件完整目录的文件名。
+`basename /home/dekanglee/test.txt`会返回`test.txt`。`basename /home/dekanglee/test.txt .txt`会返回`test`将后缀也去掉了。
+dirname:与basename相反，可以获取文件的目录路径部分，`dirname /home/dekanglee/test.txt`返回`/home/dekanglee`
+自定义函数，基本语法如下
+
+```shell
+[function] funname[()]
+{
+    Action;
+    [return int;]
+}
+```
+
+##### shell综合案例-数据库定时备份
+
+具体思路与要求如下图所示。
+
+![1](picture/shell综合案例数据库定时备份.png)
+
+使用crond定时调用编写好的shell脚本即可。
