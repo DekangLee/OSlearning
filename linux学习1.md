@@ -1,13 +1,3 @@
-<!--
- * @Author: dekangLee dekang579@gmail.com
- * @Date: 2024-04-23 19:39:12
- * @LastEditors: dekangLee dekang579@gmail.com
- * @LastEditTime: 2024-05-08 09:11:55
- * @FilePath: \OSlearning\linux学习1.md
- * @Description: 
- * 
- * Copyright (c) 2024 by  dekang579@gmail.com, All Rights Reserved. 
--->
 ### <font face="宋体" >1.linux学习1
 
 #### 1.1具体的目录结构
@@ -62,9 +52,9 @@ vim是常用的文件编辑工具，主要有一般模式，命令模式，插�
 在当前用户shell中使用`whoami`可以查看当前用户信息。
 
 #### 1.6 用户组
-
++
 用户组类似于角色的概念，系统可以对具有共性/权限的用户进行统一管理。添加用户时会默认生成一个与用户id相同的group里面就是这个用户。
-1.新建用户时可以使用`useradd -g groupname uesrname` 来将新用户添加到`grouoname`组中。
+1.新建用户时可以使用`useradd -g groupname uesrname` 来将新用户添加到`groupname`组中。
 2.对于已经建立过的用户可以使用`usermod -g groupname username`，将`username` 添加到`groupname`中。
 3.与用户和用户组相关的文件目录是`/etc/passwd`是用户的配置文件，其每一行代表一个用户信息，共有7段每一段使用:分割，分别代表，用户名:口令:用户识别号:组标识号:注释性描述:主目录:登录shell，记录用户的信息。`/etc/shadow`口令的配置文件，`/etc/group`用户组的配置文件。
 
@@ -98,8 +88,8 @@ vim是常用的文件编辑工具，主要有一般模式，命令模式，插�
 2.`cd [参数]`参数为绝对路径或者相对路径。有两个特殊用法:`cd ~`会进入当前用户的`home`目录，`cd ..`会退回上一级目录。
 3.`mkdir dirname`在当前的目录下创建新目录，该命令不可以创建多级目录。可以通过增加参数`mkdir -p /dirname0/dirname1`创建多级目录，需要注意这里`/dirname0/dirname1`应为目标路径的绝对路径，否则会从根目录开始建立。
 4.`rmdir dirname`命令可以用来删除空目录，如果目录不为空则无法删除。可以通过`rm -rf dirname`来强制删除非空目录。
-5.`touch file`命令创建一个新文件，文件内容为空。
-6.`cp [opt] source dest`命令可复制文件或者文件夹，若将当前文件`a.txt`复制到`/home/tom/`目录下面，可使用命令`cp a.txt /home/tom/`。若要赋值文件夹，可使用命令`cp -r /home/jack/test /home/tom/`该命令会将jack下面的test文件夹复制到tom目录下面。如果tom目录下面已有文件夹test并且已有相同的文件，此时系统会提示是否覆盖，可以通过强制赋值命令`\cp -r /home/jack/test /home/tom/`进行复制，此时系统不会有任何提示。
+5.`touch file`命令创建一个新文件，文件内容为空。若该文件已存在则仅仅会改变该文件的创建时间，文件的内容不变。
+6.`cp [opt] source dest`命令可复制文件或者文件夹，若将当前文件`a.txt`复制到`/home/tom/`目录下面，可使用命令`cp a.txt /home/tom/`。若要赋值文件夹，可使用命令`cp -r /home/jack/test /home/tom/`该命令会将jack下面的test目录复制到tom目录下面。如果tom目录下面已有文件夹test并且已有相同的文件，此时系统会提示是否覆盖，可以通过强制赋值命令`\cp -r /home/jack/test /home/tom/`进行复制，此时系统不会有任何提示。需要注意的是复制文件或者目录需要一定的读写与执行权限，并且复制后的目录与文件的创建日期会更新。
 7.`rm [pot]`删除命令，若删除单个文件可直接`rm file`，若删除文件夹使用命令`rm -rf file`，会强制删除文件夹，应谨慎使用。
 8.`mv`命令，可移动文件或目录，还可以给文件重命名。`mv oldName newName`这种用法会将之前的文件移动到新文件中，根据设置新文件的名称完成重命名。`mv /dir1/dir0/file /dir2/dir3/`将一个目录下的文件移动到另一个目录下面。`mv /dir1/dir0/ /dir2/`可以将dir1下面的dir0移动到dir2中，完成文件夹的移动。
 9.`cat -n file`该命令可以用于浏览文件内容，`-n`会显示文件的行号。根据文档描述`cat`命令会链接文件并在标准输出上输出，可以用管道命令一起使用`cat file | more`。`more`命令是一个基于VI编辑器的文本过滤，它以全屏的方式按页显示文本文件内容。按空格键会向下翻页，Enter键会向下翻一行。`q`会立刻离开，`=`会显示当前行号。`:f`会显示文件名和当前行号。、
@@ -139,7 +129,7 @@ grep基本语法：`grep [opt] 查找内容 源文件`
 1、gzip/gunzip命令，gzip用于压缩文件，gunzip用于解压缩文件。
 基本语法：`gzip 文件名`只能将文件压缩为*.gz格式的文件，并且压缩后源文件被覆盖。`gunzip 文件名.gz`可以将文件解压。
 2、zip/uzip命令：zip用于压缩，unzip用于解压。
-基本语法：`zip [opt] ***.zip 要压缩的内容`压缩文件和目录的命令。`unzip [opt] ***.zip`解压缩文件。常用选项`-r`递归压缩，表示压缩整个目录。`-d<目录>`解压到指定目录。
+基本语法：`zip [opt] ***.zip 要压缩的内容`压缩文件和目录的命令，常用选项`-r`递归压缩，表示压缩整个目录。。`unzip [opt] ***.zip`解压缩文件。`-d<目录>`解压到指定目录。
 3、tar命令：该命令即是压缩也是解压命令。压缩后的文件格式为*.tar.gz。
 基本语法：`tar [opt] ***.tar.gz 压缩的内容`。
 选项说明：
